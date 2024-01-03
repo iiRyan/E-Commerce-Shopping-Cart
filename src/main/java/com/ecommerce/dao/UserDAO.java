@@ -7,6 +7,8 @@ import com.ecommerce.beans.User;
 
 public interface UserDAO {
 
+	
+	
 	// 1- Insert new User
 	public boolean addUser(User user) throws SQLException;
 
@@ -16,8 +18,8 @@ public interface UserDAO {
 	// 3- Update User
 	public boolean updateUser(User User) throws SQLException;
 
-	// 4- Get User using User ID
-	public User getUser(int UserId) throws SQLException;
+	// 4- User Login
+	public User userLogin(String email,String password) throws SQLException;
 
 	// 5- Get All Users
 	public List<User> getAllUsers() throws SQLException;

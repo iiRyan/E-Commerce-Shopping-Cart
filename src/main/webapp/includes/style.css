@@ -16,6 +16,8 @@ body{
   
 }
 
+
+
 #nav a:not(.logo):hover {
   color: #414a67;
   filter: brightness(120%);

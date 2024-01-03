@@ -48,25 +48,34 @@ public class UserDAOimpl implements UserDAO {
 	}
 
 	@Override
-	public User getUser(int id) {
-		try {
-			String query = "select * from ecommerce_cart.users where id = ?";
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, id);
+	public User userLogin(String email, String password) {
+	    try {
+	        String query = "SELECT * FROM ecommerce_cart.users WHERE email = ?";
+	        PreparedStatement preparedStatement = connection.prepareStatement(query);
+	        preparedStatement.setString(1, email);
 
-			User User = new User();
-			ResultSet resultSet = preparedStatement.executeQuery();
+	        ResultSet resultSet = preparedStatement.executeQuery();
 
-			while (resultSet.next()) {
-				User.setId(resultSet.getInt("id"));
-				User.setName(resultSet.getString("name"));
-				User.setEmail(resultSet.getString("email"));
-			}
-			return User;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+	        if (resultSet.next()) {
+	            String storedPasswordHash = resultSet.getString("password");
+	            
+	            boolean isValid = HashPassword.decrypt(password, storedPasswordHash);
+
+	            if (isValid) {
+	                User user = new User();
+	                user.setId(resultSet.getInt("id"));
+	                user.setEmail(resultSet.getString("email"));
+	                user.setPassword(storedPasswordHash); // Optionally, you can set the hashed password
+
+	                System.out.println("From DAO: User found");
+	                return user;
+	            }
+	        }
+	        System.out.println("From DAO: No user found");
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return null;
 	}
 
 	@Override
@@ -121,14 +130,14 @@ public class UserDAOimpl implements UserDAO {
 		String password = "rayan123"; // rayan123
 		String encryptedPassword = HashPassword.hashedPassword(password);
 
-		user.setName("Rayan");
-		user.setEmail("rayan@gamil.com");
-		user.setPassword(encryptedPassword);
+		
+		user.setEmail("rayan@gmail.com");
+		user.setPassword("123");
 		
 		
 		
 
-		System.out.println(UserDAOImpl.addUser(user));
+		System.out.println(UserDAOImpl.userLogin(user.getEmail(),user.getPassword()));
 
 	}
 
