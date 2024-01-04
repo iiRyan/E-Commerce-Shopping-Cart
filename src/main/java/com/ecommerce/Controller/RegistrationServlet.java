@@ -20,6 +20,7 @@ import com.ecommerce.helper.HashPassword;
 @WebServlet("/register")
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	UserDAOimpl userDao = new UserDAOimpl();
 
 	public RegistrationServlet() {
 		super();
@@ -38,6 +39,11 @@ public class RegistrationServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
+		if(userDao.emailIsExist(email)) {
+			request.setAttribute("msg", "The Email is already exist!, please try again.");
+			request.getRequestDispatcher("register.jsp").forward(request, response);
+			return;
+		}
 		
 		// Encrypt the password.
 		String encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -45,33 +51,28 @@ public class RegistrationServlet extends HttpServlet {
 		User user = new User(username, email, encryptedPassword);
 		System.out.println("addNewEmployee, Employee Details ==> " + user);
 
-		UserDAOimpl userDao = new UserDAOimpl();
-
-		HttpSession session = request.getSession();
-		RequestDispatcher dispatcher = null;
-
+		
+		boolean action = false;
 		try {
-			boolean action = userDao.addUser(user);
-
+			action = userDao.addUser(user);
+			
 			if (action) {
 
-				dispatcher = request.getRequestDispatcher("login.jsp");
 				System.out.println("Create new user Successfully!");
-				session.setAttribute("msg", "You've Successfully Registerd");
-				dispatcher.forward(request, response);
+				response.sendRedirect("login.jsp");
 
-				
-			} 
-			else {
-				dispatcher = request.getRequestDispatcher("register");
-				session.setAttribute("msg", "Something Went Wrong!");
-				
+			} else {
+
+				request.setAttribute("msg", "Unknown login, please try again.");
+				request.getRequestDispatcher("register.jsp").forward(request, response);
+
 			}
-		} 
-		
-		catch (SQLException e) {
-			System.out.println(e);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
+		
 	}
 
 }

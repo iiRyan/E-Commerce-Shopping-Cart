@@ -17,6 +17,7 @@ public class UserDAOimpl implements UserDAO {
 
 	@Override
 	public boolean addUser(User user) throws SQLException {
+		
 		try {
 			String insertStatement = "INSERT INTO ecommerce_cart.users (name, email,password) VALUES (?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(insertStatement);
@@ -30,6 +31,28 @@ public class UserDAOimpl implements UserDAO {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public boolean emailIsExist(String email) {
+
+		boolean isExist = false;
+		try {
+
+			String checkEmailStatement = "SELECT email FROM ecommerce_cart.users where email = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(checkEmailStatement);
+			preparedStatement.setString(1, email);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				System.out.println("Row with email found");
+				isExist = true;
+				return isExist;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return isExist;
 	}
 
 	@Override
@@ -49,33 +72,33 @@ public class UserDAOimpl implements UserDAO {
 
 	@Override
 	public User userLogin(String email, String password) {
-	    try {
-	        String query = "SELECT * FROM ecommerce_cart.users WHERE email = ?";
-	        PreparedStatement preparedStatement = connection.prepareStatement(query);
-	        preparedStatement.setString(1, email);
+		try {
+			String query = "SELECT * FROM ecommerce_cart.users WHERE email = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, email);
 
-	        ResultSet resultSet = preparedStatement.executeQuery();
+			ResultSet resultSet = preparedStatement.executeQuery();
 
-	        if (resultSet.next()) {
-	            String storedPasswordHash = resultSet.getString("password");
-	            
-	            boolean isValid = HashPassword.decrypt(password, storedPasswordHash);
+			if (resultSet.next()) {
+				String storedPasswordHash = resultSet.getString("password");
 
-	            if (isValid) {
-	                User user = new User();
-	                user.setId(resultSet.getInt("id"));
-	                user.setEmail(resultSet.getString("email"));
-	                user.setPassword(storedPasswordHash); // Optionally, you can set the hashed password
+				boolean isValid = HashPassword.decrypt(password, storedPasswordHash);
 
-	                System.out.println("From DAO: User found");
-	                return user;
-	            }
-	        }
-	        System.out.println("From DAO: No user found");
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return null;
+				if (isValid) {
+					User user = new User();
+					user.setId(resultSet.getInt("id"));
+					user.setEmail(resultSet.getString("email"));
+					user.setPassword(storedPasswordHash); // Optionally, you can set the hashed password
+
+					System.out.println("From DAO: User found");
+					return user;
+				}
+			}
+			System.out.println("From DAO: No user found");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
@@ -126,18 +149,16 @@ public class UserDAOimpl implements UserDAO {
 	public static void main(String[] args) throws SQLException {
 		UserDAOimpl UserDAOImpl = new UserDAOimpl();
 		User user = new User();
-		
+
 		String password = "rayan123"; // rayan123
 		String encryptedPassword = HashPassword.hashedPassword(password);
 
-		
 		user.setEmail("rayan@gmail.com");
 		user.setPassword("123");
-		
-		
-		
 
-		System.out.println(UserDAOImpl.userLogin(user.getEmail(),user.getPassword()));
+		String email = "iirharbi@gmail.com";
+
+		System.out.println(UserDAOImpl.emailIsExist(email));
 
 	}
 
