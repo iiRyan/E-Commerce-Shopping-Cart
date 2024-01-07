@@ -30,10 +30,8 @@
 							</div>
 							<div class="mb-3">
 								<label>Password:</label> <input type="password" name="password"
-									class="form-control" id="password"> 
-									
+									class="form-control" id="password">
 							</div>
-            
 							<button id="submit" class=" btn btn-dark col-md-12">Login</button>
 							<div class="text-center m-2">
 								Already have account?<a href="register.jsp"
@@ -46,5 +44,5 @@
 		</div>
 	</div>
 
-	
+
 	<%@include file="includes/footer.jsp"%>

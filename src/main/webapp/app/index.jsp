@@ -19,7 +19,7 @@
 		<div class="row">
 			<div class="col-md-3">
 				<div class="card w-100" style="width: 18rem;">
-					<img class="card-img-top" src="/product-images/1.jpg" alt="Card image cap">
+					<img class="card-img-top" src="/assets/img/1.jpg" alt="Card image cap">
 					
 					<div class="card-body">
 						<h5 class="card-title">Card title</h5>
