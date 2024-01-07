@@ -88,6 +88,7 @@ public class UserDAOimpl implements UserDAO {
 					User user = new User();
 					user.setId(resultSet.getInt("id"));
 					user.setEmail(resultSet.getString("email"));
+					user.setName(resultSet.getString("name"));
 					user.setPassword(storedPasswordHash); // Optionally, you can set the hashed password
 
 					System.out.println("From DAO: User found");

@@ -19,7 +19,7 @@
 				<div class="card ">
 					<div id="card-header" class="card-header">
 						<p class="text-center fs-3 ">Login</p>
-						<p class="text-center text-success fs-4">${msg}</p>
+						<p class="text-center text-danger fs-4">${msg}</p>
 					</div>
 					<div id="card-body" class="card-body">
 						<form action="login" method="post">

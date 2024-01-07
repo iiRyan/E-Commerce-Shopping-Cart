@@ -48,7 +48,8 @@ public class LoginServlet extends HttpServlet {
 	        if (isValid) {
 	            HttpSession session = request.getSession(true);
 	            session.setAttribute("user", user);
-	            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+	            System.out.println(user.toString()); 
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("app/index.jsp");
 	            dispatcher.forward(request, response);
 	        } else {
 	            request.setAttribute("msg", "Invalid credentials");

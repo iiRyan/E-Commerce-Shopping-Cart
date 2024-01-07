@@ -59,7 +59,7 @@ public class RegistrationServlet extends HttpServlet {
 			if (action) {
 
 				System.out.println("Create new user Successfully!");
-				response.sendRedirect("login.jsp");
+				request.getRequestDispatcher("login.jsp").forward(request, response);
 
 			} else {
 
