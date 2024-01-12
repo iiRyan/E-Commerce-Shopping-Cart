@@ -216,3 +216,21 @@ input[type=number] {
   .delete{
     color: #ff465a;
   }
+  
+  .card-deck {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.card {
+  flex: 1 0 auto;
+}
+
+.table tbody td{
+    vertical-align: middle;
+    }
+    .btn-incre, .btn-decre{
+    box-shadow: none;
+    font-size: 25px;
+    }

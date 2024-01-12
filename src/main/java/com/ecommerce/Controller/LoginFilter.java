@@ -1,6 +1,7 @@
 package com.ecommerce.Controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -11,12 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ecommerce.beans.Product;
+import com.ecommerce.dao.ProductDao;
+
 @WebFilter("/app/*")
 public class LoginFilter extends HttpFilter {
-
-	/**
-	 * 
-	 */
+	private static final String FILTER_EXECUTED = "FILTER_EXECUTED";
+	
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -29,12 +31,14 @@ public class LoginFilter extends HttpFilter {
 	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		
+		
 		HttpSession session = request.getSession(false);
-
+		
 		if (session == null || session.getAttribute("user") == null) {
 			response.sendRedirect(request.getContextPath() + "/login.jsp"); // No logged-in user found, so redirect to login
 																		// page.
 		} else {
+			
 			chain.doFilter(request, response); // Logged-in user found, so just continue request.
 		}
 	}

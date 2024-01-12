@@ -24,4 +24,13 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
         });
     </script>
     
-    
+    <script src="js/main.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
+
+	<script type="text/javascript">
+	var status = document.getElementById("status").value;
+	if(status == "failed"){
+		swal("Sorry!","Wrong UserName or Password","error");
+	}
+	</script>
+	<script src="js/main.js"></script>

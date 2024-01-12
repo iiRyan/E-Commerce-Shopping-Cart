@@ -1,6 +1,7 @@
 package com.ecommerce.Controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,7 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import com.ecommerce.beans.Product;
 import com.ecommerce.beans.User;
+import com.ecommerce.dao.ProductDao;
 import com.ecommerce.dao.UserDAOimpl;
 import com.ecommerce.helper.HashPassword;
 
@@ -34,6 +37,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
 
+		System.out.println("LoginServlet Class Starts...");
 	    String email = request.getParameter("email");
 	    String paramPassword = request.getParameter("password");
 
@@ -47,10 +51,12 @@ public class LoginServlet extends HttpServlet {
 
 	        if (isValid) {
 	            HttpSession session = request.getSession(true);
+	            
 	            session.setAttribute("user", user);
 	            System.out.println(user.toString()); 
-	            RequestDispatcher dispatcher = request.getRequestDispatcher("app/index.jsp");
-	            dispatcher.forward(request, response);
+	            
+	            response.sendRedirect("app/index");
+				
 	        } else {
 	            request.setAttribute("msg", "Invalid credentials");
 	            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");

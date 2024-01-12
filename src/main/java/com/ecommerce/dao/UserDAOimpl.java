@@ -14,13 +14,14 @@ import com.ecommerce.helper.HashPassword;
 public class UserDAOimpl implements UserDAO {
 
 	static Connection connection = DBConnection.getConnection();
+	private PreparedStatement preparedStatement;
 
 	@Override
 	public boolean addUser(User user) throws SQLException {
-		
+
 		try {
 			String insertStatement = "INSERT INTO ecommerce_cart.users (name, email,password) VALUES (?, ?, ?)";
-			PreparedStatement preparedStatement = connection.prepareStatement(insertStatement);
+			preparedStatement = connection.prepareStatement(insertStatement);
 			preparedStatement.setString(1, user.getName());
 			preparedStatement.setString(2, user.getEmail());
 			preparedStatement.setString(3, user.getPassword());
@@ -30,7 +31,7 @@ public class UserDAOimpl implements UserDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
-		}
+		} 
 	}
 
 	public boolean emailIsExist(String email) {
@@ -39,7 +40,7 @@ public class UserDAOimpl implements UserDAO {
 		try {
 
 			String checkEmailStatement = "SELECT email FROM ecommerce_cart.users where email = ?";
-			PreparedStatement preparedStatement = connection.prepareStatement(checkEmailStatement);
+			preparedStatement = connection.prepareStatement(checkEmailStatement);
 			preparedStatement.setString(1, email);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -51,7 +52,7 @@ public class UserDAOimpl implements UserDAO {
 			}
 		} catch (Exception e) {
 			System.out.println(e);
-		}
+		} 
 		return isExist;
 	}
 
@@ -59,7 +60,7 @@ public class UserDAOimpl implements UserDAO {
 	public boolean deleteUser(int id) throws SQLException {
 		try {
 			String deleteStatement = "delete from ecommerce_cart.users where id = ?";
-			PreparedStatement preparedStatement = connection.prepareStatement(deleteStatement);
+			preparedStatement = connection.prepareStatement(deleteStatement);
 
 			preparedStatement.setInt(1, id);
 			boolean result = preparedStatement.executeUpdate() == 1 ? true : false;
@@ -67,14 +68,14 @@ public class UserDAOimpl implements UserDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
-		}
+		} 
 	}
 
 	@Override
 	public User userLogin(String email, String password) {
 		try {
 			String query = "SELECT * FROM ecommerce_cart.users WHERE email = ?";
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, email);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -98,7 +99,7 @@ public class UserDAOimpl implements UserDAO {
 			System.out.println("From DAO: No user found");
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} 
 		return null;
 	}
 
@@ -108,7 +109,7 @@ public class UserDAOimpl implements UserDAO {
 			Connection connection = DBConnection.getConnection();
 
 			String query = "SELECT * FROM ecommerce_cart.users;";
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement = connection.prepareStatement(query);
 			ResultSet rs = preparedStatement.executeQuery();
 			List<User> Users = new ArrayList<User>();
 
@@ -126,7 +127,7 @@ public class UserDAOimpl implements UserDAO {
 			System.out.println("exception ===================> " + e.getMessage());
 			e.printStackTrace();
 			return null;
-		}
+		} 
 	}
 
 	@Override
@@ -134,7 +135,7 @@ public class UserDAOimpl implements UserDAO {
 		try {
 			String query = "update ecommerce_cart.users SET NAME = ?, email = ? WHERE id = ?";
 
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, user.getName());
 			preparedStatement.setString(2, user.getEmail());
 			preparedStatement.setInt(5, user.getId());
@@ -144,7 +145,7 @@ public class UserDAOimpl implements UserDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
-		}
+		} 
 	}
 
 	public static void main(String[] args) throws SQLException {
