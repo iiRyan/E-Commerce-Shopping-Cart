@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
 				
 	        }
 	    } else {
-	    	 request.setAttribute("status", "Invalid");
+	    	request.setAttribute("status", "Invalid");
 	        RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 	        rd.forward(request, response);
 	    }

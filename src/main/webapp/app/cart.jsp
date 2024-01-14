@@ -50,13 +50,13 @@
 					<td>${cart.category}</td>
 					<td>${cart.price}</td>
 					<td>
-						<form action="" method="get" class="form-inlin">
+						<form action="${contextPath}/app/order-now" method="post" class="form-inlin">
 							<input type="hidden" name="id" value=${cart.id} class="form-input">
-							<div  class="form-group d-flex justify-content-between">
+							<div  class="form-group d-flex justify-content-between w-50">
 					
 								<a href="${contextPath}/app/inc-dec?action=inc&id=${cart.id}" class="btn btn-sm btn-incre"><i class="fas fa-plus-square"></i></a>
 									 <input type="text"name="quantity" class="form-control" value="${cart.quantity}"  readonly>
-								<a href="${contextPath}/app/inc-dec?action=dec&id=${cart.id}" class="btn btn-sm btn-decre"><i class="fas fa-minus-square"></i></a>
+								<a href="${contextPath}/app/inc-dec?action=dec&id=${cart.id}" class="btn btn-sm btn-decre"><i class="fas fa-minus-square"></i></a><button class="btn btn-success btn-sm">Buy</button>
 							</div>
 						</form>
 					</td>

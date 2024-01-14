@@ -55,7 +55,7 @@
 				
 				<c:set var="cartList" value="${sessionScope.localCartList}" />
 				 <li class="nav-item active">
-		        		<a class="nav-link" href="${contextPath}/app/cart-list">Cart<span class="badge bg-danger px-1">${localCartList.size()}</span></a>
+		        		<a class="nav-link" href="${contextPath}/app/cart-list">Cart<span class="badge bg-danger px-1">${empty cartList ? '' : cartList.size()}</span></a>
 		     	 </li>
 		      
 			    <li class="nav-item">
