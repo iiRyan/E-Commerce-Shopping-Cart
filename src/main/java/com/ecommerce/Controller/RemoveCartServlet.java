@@ -2,12 +2,15 @@ package com.ecommerce.Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ecommerce.beans.Cart;
 
 /**
  * Servlet implementation class RemoveCartServlet
@@ -22,12 +25,26 @@ public class RemoveCartServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		
+		String contextPath = request.getContextPath();
+		
 		try {
 			
-			int id = Integer.parseInt(request.getParameter("id"));
-			PrintWriter out = response.getWriter();
+			String id = request.getParameter("id");
+			if(id != null) {
+				List<Cart> cartList = (ArrayList<Cart>) request.getSession().getAttribute("sessionCart-list");
+				if(cartList != null) {
+					for(Cart c:cartList) {
+						if(c.getId() == Integer.parseInt(id)) {
+							cartList.remove(cartList.indexOf(c));
+							break;
+						}
+					}
+					response.sendRedirect(contextPath + "/app/cart-list");
+				}
+			}else {
+				response.sendRedirect(contextPath + "/app/cart-list");
+			}
 			
-			out.print("ID" + id);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
