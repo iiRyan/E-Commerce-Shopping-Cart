@@ -1,6 +1,7 @@
 package com.ecommerce.Controller;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.*;
 
@@ -23,31 +24,30 @@ public class CartListServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		System.out.println("CartListServlet Class Starts...");
+		
 		ProductDao productDao = new ProductDao();
-
 		HttpSession session = request.getSession();
-
-		List<Cart> myList = new ArrayList<Cart>();
-
+		DecimalFormat decimaPrice = new DecimalFormat("#.##");
+	
 		try {
 
-			// Get the CartList that stored in session.
-			ArrayList<Cart> localCartList = (ArrayList<Cart>) session.getAttribute("sessionCart-list");
+			// Get the CartList that stored in sessionAttribut.
+			List<Cart> localCartList = (List<Cart>) session.getAttribute("sessionCart-list");
 
 			if (localCartList != null) {
-				myList = productDao.getCartProducts(localCartList);
 				
+				localCartList = productDao.getCartProducts(localCartList);
 				double listOfPrices = productDao.getTotalCartPrice(localCartList);
 				
-				request.setAttribute("listOfPrices", Math.floor(listOfPrices));
-				session.setAttribute("localCartList", myList);
-				System.out.println("cartList Size ==> " + myList.size() + "\nMy list items ==> " + myList.toString());
+				request.setAttribute("listOfPrices", decimaPrice.format(listOfPrices));
+				session.setAttribute("localCartList", localCartList);
+				System.out.println("cartList Size ==> " + localCartList.size() + "\nMy list items ==> " + localCartList.toString());
 
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/app/cart.jsp");
 				dispatcher.forward(request, response);
 
 			} else {
-				request.setAttribute("msg", "No Cart List here");
+				request.setAttribute("msg", "The Cart is Empty");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/app/cart.jsp");
 				dispatcher.forward(request, response);
 			}

@@ -42,7 +42,7 @@ public class ProductDao {
 		return products;
 	}
 
-	public List<Cart> getCartProducts(ArrayList<Cart> cartList) {
+	public List<Cart> getCartProducts(List<Cart> cartList) {
 		
 		
 		List<Cart> product = new ArrayList<Cart>();
@@ -79,7 +79,7 @@ public class ProductDao {
 	
 	
 	
-	public double getTotalCartPrice(ArrayList<Cart> cartList) {
+	public double getTotalCartPrice(List<Cart> cartList) {
 		double sum = 0;
 		
 		try {

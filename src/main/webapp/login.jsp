@@ -12,7 +12,9 @@
 
 	<%@include file="includes/header.jsp"%>
 
-
+<c:set var="status" value="${requestScope['status']}" />
+	<input type="hidden" id="status" value="${status}" />
+	
 	<div class="container p-5">
 		<div class="row">
 			<div class="col-md-6 offset-md-3">
@@ -26,11 +28,11 @@
 
 							<div class="mb-3">
 								<label>Email:</label> <input type="email" name="email"
-									class="form-control">
+									class="form-control" required="required">
 							</div>
 							<div class="mb-3">
 								<label>Password:</label> <input type="password" name="password"
-									class="form-control" id="password">
+									class="form-control" id="password" required="required">
 							</div>
 							<button id="submit" class=" btn btn-dark col-md-12">Login</button>
 							<div class="text-center m-2">
@@ -44,5 +46,20 @@
 		</div>
 	</div>
 
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script type="text/javascript">
+		var status = document.getElementById("status").value;
+		 if (status == "Invalid") {
+
+			Swal.fire({
+				  position: "center",
+				  icon: "error",
+				  title: "Invalid credentials!",
+				  showConfirmButton: false,
+				  timer: 1500
+				});
+		}
+	</script>
+	<script src="js/main.js"></script>
 
 	<%@include file="includes/footer.jsp"%>

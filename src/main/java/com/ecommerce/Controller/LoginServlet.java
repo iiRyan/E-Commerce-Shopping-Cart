@@ -38,32 +38,29 @@ public class LoginServlet extends HttpServlet {
 	        throws ServletException, IOException {
 
 		System.out.println("LoginServlet Class Starts...");
+		
+		
 	    String email = request.getParameter("email");
 	    String paramPassword = request.getParameter("password");
 
 	    UserDAOimpl userDao = new UserDAOimpl();
-	    User user = userDao.userLogin(email,paramPassword); // Fetch user details from DB based on email
+	    User user = userDao.userLogin(email,paramPassword); // Fetch user details from DB based on email.
 
 	    if (user != null) {
+	    	
 	        String storedPassword = user.getPassword(); // Get the hashed password from the user object
-
 	        boolean isValid = BCrypt.checkpw(paramPassword, storedPassword); // Check if passwords match using BCrypt
 
 	        if (isValid) {
+	        	
 	            HttpSession session = request.getSession(true);
-	            
 	            session.setAttribute("user", user);
 	            System.out.println(user.toString()); 
-	            
 	            response.sendRedirect("app/index");
 				
-	        } else {
-	            request.setAttribute("msg", "Invalid credentials");
-	            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-	            rd.forward(request, response);
 	        }
 	    } else {
-	        request.setAttribute("msg", "User not found");
+	    	 request.setAttribute("status", "Invalid");
 	        RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 	        rd.forward(request, response);
 	    }

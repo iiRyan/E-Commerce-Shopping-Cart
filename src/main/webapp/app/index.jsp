@@ -1,12 +1,8 @@
-<%@page import="java.util.List"%>
+<%@page import="java.util.*"%>
 <%@page import="com.ecommerce.dao.ProductDao"%>
 <%@page import="com.ecommerce.beans.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
-
-
-
 
 <meta charset="UTF-8">
 <title>Shpoing-Cart</title>
@@ -17,7 +13,7 @@
 	
 	<!-- Get the  -->
 	
-	
+	<c:set var="cartList" value="${requestScope.localCartList}" />
 	<c:set var="status" value="${requestScope['status']}" />
 	<input type="hidden" id="status" value="${status}" />
 

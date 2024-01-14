@@ -31,17 +31,17 @@
 <ul id="nav" class="nav justify-content-center">
 	
 			
-			
+			<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 			<!-- If the user not logged in show login & Register links -->
 			<c:if test="${ empty user }">
 			<li class="nav-item">
-			  <a class="nav-link active logo" aria-current="page" href="<%=request.getContextPath()%>/login.jsp">E-Commerce Shoping Cart</a>
+			  <a class="nav-link active logo" aria-current="page" href="${contextPath}/login.jsp">E-Commerce Shoping Cart</a>
 			</li>
 				 <li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="<%=request.getContextPath()%>/login.jsp">Login</a>
+					<a class="nav-link active" aria-current="page" href="${contextPath}/login.jsp">Login</a>
 				  </li>
 				  <li class="nav-item">
-					<a class="nav-link active"  href="<%=request.getContextPath()%>/register.jsp">Register</a>
+					<a class="nav-link active"  href="${contextPath}/register.jsp">Register</a>
 				  </li>
 				   </c:if>
 				  
@@ -50,12 +50,12 @@
 			<!-- If the User Object is not null "Logged in"  show his name-->
 		<c:if test="${not empty user }">
 				<li class="nav-item">
-				 		 <a class="nav-link active logo" aria-current="page" href="<%=request.getContextPath()%>/app/index">E-Commerce Shoping Cart</a>
+				 		 <a class="nav-link active logo" aria-current="page" href="${contextPath}/app/index">E-Commerce Shoping Cart</a>
 				</li>
 				
 				<c:set var="cartList" value="${sessionScope.localCartList}" />
 				 <li class="nav-item active">
-		        		<a class="nav-link" href="<%=request.getContextPath()%>/app/cart-list">Cart<span class="badge bg-danger">${cartList.size()}</span></a>
+		        		<a class="nav-link" href="${contextPath}/app/cart-list">Cart<span class="badge bg-danger px-1">${localCartList.size()}</span></a>
 		     	 </li>
 		      
 			    <li class="nav-item">
@@ -64,7 +64,7 @@
 					  
 					  <!-- If the User Object is not null "Logged in"  show add budget button-->
 				 <li class="nav-item">
-						<a class="nav-link active"  href="<%=request.getContextPath()%>/logout">Logout</a>
+						<a class="nav-link active"  href="${contextPath}/logout">Logout</a>
 				  </li>
 		</c:if>
 				
