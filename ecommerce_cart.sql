@@ -18,6 +18,22 @@ CREATE SCHEMA IF NOT EXISTS `ecommerce_cart` DEFAULT CHARACTER SET utf8mb4 COLLA
 USE `ecommerce_cart` ;
 
 -- -----------------------------------------------------
+-- Table `ecommerce_cart`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ecommerce_cart`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(250) NOT NULL,
+  `email` VARCHAR(250) NOT NULL,
+  `password` VARCHAR(250) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
 -- Table `ecommerce_cart`.`products`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ecommerce_cart`.`products` (
@@ -26,7 +42,14 @@ CREATE TABLE IF NOT EXISTS `ecommerce_cart`.`products` (
   `category` VARCHAR(450) NOT NULL,
   `price` DOUBLE NOT NULL,
   `image` VARCHAR(450) NOT NULL,
-  PRIMARY KEY (`id`))
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `ecommerce_cart`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb4
@@ -44,27 +67,17 @@ CREATE TABLE IF NOT EXISTS `ecommerce_cart`.`orders` (
   `o_date` VARCHAR(450) NOT NULL,
   PRIMARY KEY (`o_id`),
   INDEX `id_idx` (`p_id` ASC) VISIBLE,
+  INDEX `u_id_idx` (`u_id` ASC) VISIBLE,
   CONSTRAINT `p_id`
     FOREIGN KEY (`p_id`)
-    REFERENCES `ecommerce_cart`.`products` (`id`))
+    REFERENCES `ecommerce_cart`.`products` (`id`),
+  CONSTRAINT `u_id`
+    FOREIGN KEY (`u_id`)
+    REFERENCES `ecommerce_cart`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 17
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `ecommerce_cart`.`users`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ecommerce_cart`.`users` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(250) NOT NULL,
-  `email` VARCHAR(250) NOT NULL,
-  `password` VARCHAR(250) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
-ENGINE = InnoDB
-AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
