@@ -1,4 +1,7 @@
-* {
+body{
+    background-color: #f7f9fd;
+}
+/** {
 
     padding: 0;
     margin: 0;
@@ -6,9 +9,7 @@
     font-family: 'Poppins', sans-serif;
 }
 
-body{
-    background-color: #f7f9fd;
-}
+
 
 #nav{
     margin-top: 2em;
@@ -160,7 +161,7 @@ body{
 }
 
 
-/* Firefox ==> Hide Arrow from number input */ 
+ Firefox ==> Hide Arrow from number input  
 input[type=number] {
     -moz-appearance: textfield;
   }
@@ -234,3 +235,4 @@ input[type=number] {
     box-shadow: none;
     font-size: 25px;
     }
+*/
