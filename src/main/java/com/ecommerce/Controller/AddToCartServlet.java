@@ -72,6 +72,7 @@ public class AddToCartServlet extends HttpServlet {
 				if(!isExist) {
 					// Add the new cart to the list
 					cartList.add(cart);
+					System.out.println("From AddToCartList The CartList Size ==> " + cartList.size());
 					request.setAttribute("status", "notExist");
 					requestDispatcher = request.getRequestDispatcher("/app/index");
 					requestDispatcher.forward(request, response);

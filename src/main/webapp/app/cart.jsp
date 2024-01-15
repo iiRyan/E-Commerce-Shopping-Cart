@@ -4,15 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<style>
 
-#form-control {
-   padding: 0.25rem 0.5rem; /* Adjust as needed */
-   margin: 0; /* Adjust as needed */
-   background-color: red;
-}
-}
-</style>
 
 <%@include file="../includes/header.jsp"%>
 
@@ -29,7 +21,7 @@
 	</c:if>
 
 
-	<a href="#" class="mx-3 btn btn-primary">checkout</a>
+	<a href="${contextPath}/app/orders-list" class="mx-3 btn btn-primary">checkout</a>
 <div class="d-flex py-3">Total Price:$${empty price ? '0' : price}</div>
 
 	<table class="table table-light">

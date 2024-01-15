@@ -78,6 +78,32 @@ public class ProductDao {
 	}
 	
 	
+	 public Product getSingleProduct(int id) {
+		 Product row = null;
+	        try {
+	            String selectById = "select * from ecommerce_cart.products where id=? ";
+	            
+
+	            preparedStatement = connection.prepareStatement(selectById);
+	            preparedStatement.setInt(1, id);
+	            ResultSet resultSet = preparedStatement.executeQuery();
+
+	            while (resultSet.next()) {
+	            	row = new Product();
+	                row.setId(resultSet.getInt("id"));
+	                row.setName(resultSet.getString("name"));
+	                row.setCategory(resultSet.getString("category"));
+	                row.setPrice(resultSet.getDouble("price"));
+	                row.setImage(resultSet.getString("image"));
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            System.out.println(e.getMessage());
+	        }
+
+	        return row;
+	    }
+	
 	
 	public double getTotalCartPrice(List<Cart> cartList) {
 		double sum = 0;

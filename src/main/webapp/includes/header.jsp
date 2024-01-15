@@ -53,9 +53,11 @@
 				 		 <a class="nav-link active logo" aria-current="page" href="${contextPath}/app/index">E-Commerce Shoping Cart</a>
 				</li>
 				
-				<c:set var="cartList" value="${sessionScope.localCartList}" />
+				
+				<c:set var="cartList" value="${sessionScope.cartList}" />
 				 <li class="nav-item active">
-		        		<a class="nav-link" href="${contextPath}/app/cart-list">Cart<span class="badge bg-danger px-1">${empty cartList ? '' : cartList.size()}</span></a>
+				 <c:set var="cartSize" value="${empty sessionScope['sessionCart-list'] ? '' : fn:length(sessionScope['sessionCart-list'])}" />
+		        		<a class="nav-link" href="${contextPath}/app/cart-list">Cart<span class="badge bg-danger px-1">${cartSize}</span></a>
 		     	 </li>
 		      
 			    <li class="nav-item">

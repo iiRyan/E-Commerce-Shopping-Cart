@@ -20,18 +20,20 @@ import com.ecommerce.dao.OrderDao;
 @WebServlet("/app/order-now")
 public class OrderNowServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	OrderDao orderDao = new OrderDao();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		response.setContentType("text/html;charset=UTF-8");
-
 		System.out.println("From OrderNowServlet Class");
-
 		String contextPath = request.getContextPath();
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
+		
+		
 		try {
 			User user = (User) request.getSession().getAttribute("user");
 			if (user != null) {
@@ -42,15 +44,15 @@ public class OrderNowServlet extends HttpServlet {
 					productQuantity = 1;
 				}
 
-				Order orderModel = new Order();
-				orderModel.setId(productId);
-				orderModel.setUid(user.getId());
-				orderModel.setQuantity(productQuantity);
-				orderModel.setDate(formatter.format(date));
+				Order order = new Order();
+				order.setId(productId);
+				order.setUid(user.getId());
+				order.setQuantity(productQuantity);
+				order.setDate(formatter.format(date));
 
-				OrderDao orderDao = new OrderDao();
+				
 
-				boolean result = orderDao.insertOrder(orderModel);
+				boolean result = orderDao.insertOrder(order);
 
 				if (result) {
 					List<Cart> cartList = (ArrayList<Cart>) request.getSession().getAttribute("sessionCart-list");

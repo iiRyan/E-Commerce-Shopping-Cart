@@ -44,7 +44,7 @@ public class CartListServlet extends HttpServlet {
 				double listOfPrices = productDao.getTotalCartPrice(localCartList);
 
 				request.setAttribute("listOfPrices", decimaPrice.format(listOfPrices));
-				session.setAttribute("localCartList", localCartList);
+				request.setAttribute("localCartList", localCartList);
 				System.out.println("cartList Size ==> " + localCartList.size() + "\nMy list items ==> "
 						+ localCartList.toString());
 
