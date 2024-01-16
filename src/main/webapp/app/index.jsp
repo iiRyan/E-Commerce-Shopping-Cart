@@ -5,7 +5,7 @@
 	pageEncoding="UTF-8"%>
 
 <meta charset="UTF-8">
-<title>Shpoing-Cart</title>
+<title>Shopping-Cart</title>
 </head>
 <body>
 
@@ -17,50 +17,77 @@
 	<c:set var="status" value="${requestScope['status']}" />
 	<input type="hidden" id="status" value="${status}" />
 
-	<c:if test="${empty products}">
-                      There is no proucts
-    </c:if>
+	<c:if test="${empty products}">There is no proucts </c:if>
     
-	<div class="container mx-auto px-4">
-   <div class="my-3">
-       All Products
-   </div>
-   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-       <c:forEach var="product" items="${products}">
-       
-       <div class="max-w-sm rounded overflow-hidden shadow-lg">
-  <img class="w-full" src="../assets/img/${product.image}" alt="Sunset in the mountains">
-  <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2">${product.name}</div>
-    <p class="text-gray-700 text-base">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-    </p>
-  </div>
-  <div class="px-6 pt-4 pb-2">
-    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
-  </div>
-</div>
-
-           <div class="card h-full">
-               <img class="card-img-top" src="../assets/img/${product.image}" alt="Card image cap">
-               <div class="card-body flex flex-col justify-between">
-                  <h5 class="card-title">${product.name}</h5>
-                  <h6 class="price">Price: $${product.price}</h6>
-                  <h6 class="category">Category: ${product.category}</h6>
-                  <div class="mt-3 flex justify-between">
-                      <a class="btn btn-dark" href="add-to-cart?id=${product.id}">Add to Cart</a> 
-                      <a class="btn btn-success" href="order-now?quantity=1&id=${product.id}">Buy Now</a>
-                  </div>
-               </div>
-           </div>
-       </c:forEach>
-   </div>
-   <c:if test="${empty products}">
-       There is no products
-   </c:if>
-</div>
+	
+	
+	
+	
+	 <div class="flex justify-center items-center min-h-screen mt-10">
+ <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+ <c:forEach var="product" items="${products}">
+ <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl" >
+ <a href="add-to-cart?id=${product.id}">
+                <img src="../assets/img/${product.image}"
+                    alt="Product" class="h-80 w-72 object-cover rounded-t-xl" />
+                <div class="px-4 py-3 w-72">
+                    <span class="text-gray-400 mr-3 uppercase text-xs">${product.category}</span>
+                    <p class="text-lg font-bold text-black truncate block capitalize">${product.name}</p>
+                    <div class="flex items-center">
+                        <p class="text-lg font-semibold text-black cursor-auto my-3">$${product.price}</p>
+                        <del>
+                            <p class="text-sm text-gray-600 cursor-auto ml-2">$199</p>
+                        </del>
+                        <div class="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
+                                <path
+                                    d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
+                            </svg>
+                            </div>
+                    </div>
+                </div>
+            </a>
+ </div>
+            
+            </c:forEach>
+        </div>
+        <!--   🛑 Product card 1 - Ends Here  -->
+	 
+	 
+	 </div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	<script src="js/main.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
