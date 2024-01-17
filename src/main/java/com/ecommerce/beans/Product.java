@@ -3,6 +3,7 @@ package com.ecommerce.beans;
 public class Product {
 
 	private int id;
+	private int user_id;
 	private String name;
 	private String category;
 	private double price;
@@ -14,13 +15,24 @@ public class Product {
 	}
 
 
-	public Product(int id, String name, String category, double price, String image) {
+	public Product(int id,int user_id, String name, String category, double price, String image) {
 		super();
 		this.id = id;
+		this.user_id = user_id;
 		this.name = name;
 		this.category = category;
 		this.price = price;
 		this.image = image;
+	}
+
+
+	public int getUser_id() {
+		return user_id;
+	}
+
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
 	}
 
 
@@ -76,9 +88,12 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", category=" + category + ", price=" + price + ", image="
-				+ image + "]";
+		return "Product [id=" + id + ", user_id=" + user_id + ", name=" + name + ", category=" + category + ", price="
+				+ price + ", image=" + image + "]";
 	}
+
+
+	
 	
 	
 	

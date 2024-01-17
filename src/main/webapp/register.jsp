@@ -12,7 +12,8 @@
     <form action="register" method="post" class="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
       <p class="text-center text-lg font-medium">Sign in to your account</p>
 
-
+	<c:if test="${not empty msg} }"></c:if>
+	<p class="text-center text-red fs-4">${msg}</p>
  <div>
         <label for="email" class="sr-only">User Name</label>
 

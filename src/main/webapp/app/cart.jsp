@@ -19,7 +19,7 @@
 </c:if>
 
 
-<div class="h-screen">
+<div class="min-h-screen">
 	<div class="py-12">
 
 
@@ -34,7 +34,7 @@
 
 							<h1 class="text-xl font-medium ">Shopping Cart</h1>
 
-							<c:forEach var="cart" items="${localCartList}">
+							<c:forEach var="cart" items="${myCartList}">
 								<div class="flex justify-between items-center mt-6 pt-6">
 									<div class="flex  items-center">
 										<img src="../assets/img/${cart.image}" width="60"

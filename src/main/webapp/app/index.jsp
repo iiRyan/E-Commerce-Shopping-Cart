@@ -16,7 +16,8 @@
 	<c:set var="cartList" value="${requestScope.localCartList}" />
 	<c:set var="status" value="${requestScope['status']}" />
 	<input type="hidden" id="status" value="${status}" />
-
+	<c:set var="userInfo" value="${sessionScope.user}"/>
+	
 	<c:if test="${empty products}">There is no proucts </c:if>
 
 
@@ -29,7 +30,7 @@
 			<c:forEach var="product" items="${products}">
 				<div
 					class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-					<a href="add-to-cart?id=${product.id}"> <img
+					<a href="add-to-cart?id=${product.id}&user_id=${userInfo.id}"> <img
 						src="../assets/img/${product.image}" alt="Product"
 						class="h-80 w-72 object-cover rounded-t-xl" />
 						<div class="px-4 py-3 w-72">

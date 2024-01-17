@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.ecommerce.beans.Cart;
+import com.ecommerce.beans.User;
+import com.ecommerce.dao.CartDao;
 import com.ecommerce.dao.ProductDao;
 
 @WebServlet("/app/cart-list")
@@ -24,44 +26,17 @@ public class CartListServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		System.out.println("CartListServlet Class Starts...");
-
-		ProductDao productDao = new ProductDao();
-		HttpSession session = request.getSession(false);
-		DecimalFormat decimaPrice = new DecimalFormat("#.##");
-
-		try {
-
-			// Get the CartList that stored in sessionAttribut.
-			List<Cart> localCartList = (ArrayList<Cart>) session.getAttribute("sessionCart-list");
-
-			if (localCartList != null) {
-
-				if (localCartList.size() == 0) {
-					session.removeAttribute("sessionCart-list");
-				}
-
-				localCartList = productDao.getCartProducts(localCartList);
-				double listOfPrices = productDao.getTotalCartPrice(localCartList);
-
-				request.setAttribute("listOfPrices", decimaPrice.format(listOfPrices));
-				request.setAttribute("localCartList", localCartList);
-				System.out.println("cartList Size ==> " + localCartList.size() + "\nMy list items ==> "
-						+ localCartList.toString());
-
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/app/cart.jsp");
-				dispatcher.forward(request, response);
-
-			} else {
-
-				request.setAttribute("msg", "The Cart is Empty");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/app/cart.jsp");
-				dispatcher.forward(request, response);
-			}
-
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-
+		
+		int user_id = Integer.parseInt(request.getParameter("user_id"));
+		HttpSession session = request.getSession();
+		
+		CartDao cartDao = new CartDao();
+		List<Cart> cartList = cartDao.getUserCartList(user_id);
+		session.setAttribute("myCartList", cartList);
+		System.out.println("mynewCartList Size ==> "+ cartList.size());
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/app/cart.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

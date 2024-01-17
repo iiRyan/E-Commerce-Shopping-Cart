@@ -61,7 +61,7 @@ public class RegistrationServlet extends HttpServlet {
 
 			} else {
 
-				request.setAttribute("msg", "Unknown login, please try again.");
+				request.setAttribute("msg", "Unknown err, please try again.");
 				request.getRequestDispatcher("register.jsp").forward(request, response);
 
 			}

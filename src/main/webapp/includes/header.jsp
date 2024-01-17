@@ -47,8 +47,8 @@
  			 <!-- JSTL code -->
 			<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 			<c:set var="userInfo" value="${sessionScope.user}" />
-			<c:set var="cartList" value="${sessionScope.cartList}" />
-         	<c:set var="cartSize" value="${empty sessionScope['sessionCart-list'] ? '' : fn:length(sessionScope['sessionCart-list'])}" />
+			<c:set var="cartList" value="${sessionScope.myCartList}" />
+         	<c:set var="cartSize" value="${empty sessionScope['myCartList'] ? '' : fn:length(sessionScope['myCartList'])}" />
          
       <!-- navbar -->
    <div id="header">
@@ -90,7 +90,7 @@
                 <li>
                   <a
                     class=" transition hover:text-gray-500/75 :text-white :hover:text-indigo-700"
-                   href="${contextPath}/app/cart-list"
+                   href="${contextPath}/app/cart-list?user_id=${userInfo.id}"
                   >
                     Cart <c:if test="${ not empty cartSize }">
            <span class="center relative inline-block select-none whitespace-nowrap rounded-lg bg-red-500 py-1 px-1.5 align-baseline font-sans text-xs

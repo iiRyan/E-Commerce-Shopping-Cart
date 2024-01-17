@@ -42,19 +42,19 @@ public class ProductDao {
 		return products;
 	}
 
-	public List<Cart> getCartProducts(List<Cart> cartList) {
+	public List<Cart> getCartProducts(int user_id) {
 		
 		
 		List<Cart> product = new ArrayList<Cart>();
 
 		try {
 
-			if(cartList.size() > 0) {
+			
 				
-				for(Cart item:cartList) {	
-					String selectAll = "SELECT * FROM ecommerce_cart.products WHERE id = ?";
+					
+					String selectAll = "SELECT * FROM ecommerce_cart.place_order WHERE user_id = ?";
 					preparedStatement = connection.prepareStatement(selectAll);
-					preparedStatement.setInt(1, item.getId());
+					preparedStatement.setInt(1, user_id);
 					ResultSet resultSet = preparedStatement.executeQuery();
 				
 				while (resultSet.next()) {
@@ -62,15 +62,13 @@ public class ProductDao {
 					row.setId(resultSet.getInt("id"));
 					row.setName(resultSet.getString("name"));
 					row.setCategory(resultSet.getString("category"));
-					row.setPrice(resultSet.getDouble("price")*item.getQuantity());
+					row.setPrice(resultSet.getDouble("price"));
 					row.setImage(resultSet.getString("image"));
-					row.setQuantity(item.getQuantity());
+					
 
 					product.add(row);
 				}
-			}
-				
-			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
