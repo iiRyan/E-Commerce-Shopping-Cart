@@ -50,8 +50,6 @@ public class OrderNowServlet extends HttpServlet {
 				order.setQuantity(productQuantity);
 				order.setDate(formatter.format(date));
 
-				
-
 				boolean result = orderDao.insertOrder(order);
 
 				if (result) {

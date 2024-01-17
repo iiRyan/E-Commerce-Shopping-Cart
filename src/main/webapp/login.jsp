@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 
 
-
+<script src="https://cdn.tailwindcss.com"></script>
 
 <title>Login</title>
 
@@ -13,7 +13,7 @@
 <c:set var="status" value="${requestScope['status']}" />
 	<input type="hidden" id="status" value="${status}" />
 	
-	
+	<div class="h-screen">
 <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-lg">
     
@@ -102,6 +102,7 @@
       </p>
     </form>
   </div>
+</div>
 </div>
 	
 

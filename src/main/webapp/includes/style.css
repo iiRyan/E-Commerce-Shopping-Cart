@@ -1,13 +1,26 @@
+
 #header {
     height: 30px;
+    margin-bottom: 50px;
 }
 
 body {
     background: #f2f2f2;
     height: 100%;
     margin-bottom: 30px;
+    min-height: 100vh;
+   
 }
 
 #nav-color{
     background-color: #202945;
+}
+
+#footer{
+	
+  margin-top: 40px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
 }
