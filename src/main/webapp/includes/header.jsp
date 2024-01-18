@@ -47,8 +47,8 @@
  			 <!-- JSTL code -->
 			<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 			<c:set var="userInfo" value="${sessionScope.user}" />
-			<c:set var="cartList" value="${sessionScope.myCartList}" />
-         	<c:set var="cartSize" value="${empty sessionScope['myCartList'] ? '' : fn:length(sessionScope['myCartList'])}" />
+			<c:set var="cartList" value="${sessionScope.sessionCart-list}" />
+         	<c:set var="cartSize" value="${empty sessionScope['sessionCart-list'] ? '' : fn:length(sessionScope['sessionCart-list'])}" />
          
       <!-- navbar -->
    <div id="header">

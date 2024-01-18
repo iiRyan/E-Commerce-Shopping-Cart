@@ -33,6 +33,7 @@ public class CartListServlet extends HttpServlet {
 		CartDao cartDao = new CartDao();
 		List<Cart> cartList = cartDao.getUserCartList(user_id);
 		session.setAttribute("myCartList", cartList);
+		System.out.println("From CartServlet ==> "+cartList.toString());
 		System.out.println("mynewCartList Size ==> "+ cartList.size());
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/app/cart.jsp");

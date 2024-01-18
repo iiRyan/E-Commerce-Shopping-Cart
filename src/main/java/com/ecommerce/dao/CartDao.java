@@ -30,7 +30,7 @@ public class CartDao {
 			return result == 1 ? true : false;
 
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -56,15 +56,31 @@ public class CartDao {
 				cart.setCategory(product.getCategory());
 				cart.setPrice(product.getPrice()*resultSet.getInt("quantity"));
 				cart.setImage(product.getImage());
+				cart.setId(product.getId());// product_id
 				cart.setQuantity(resultSet.getInt("quantity"));
 				
 				cartList.add(cart);
 			}
-
+			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		
 		return cartList;
+	}
+	
+	public boolean deleteproduct(int product_id) {
+		try {
+			String deleteProduct = "SELECT * FROM ecommerce_cart.cart_list WHERE product_id = ?";
+			preparedStatement = connection.prepareStatement(deleteProduct);
+			preparedStatement.setInt(1, product_id);
+			
+			boolean result = preparedStatement.executeUpdate() == 1 ? true : false;
+			return result;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

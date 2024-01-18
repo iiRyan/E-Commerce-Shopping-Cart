@@ -82,7 +82,7 @@
 								</svg>
 													</a>
 												</button>
-												<a href="${contextPath}/app/remove-art-item?id=${cart.id}"
+												<a href="${contextPath}/app/remove-art-item?product_id=${cart.id}"
 													class="text-red-600 hover:bg-red-700"> <svg
 														xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
 														fill="currentColor" class="w-4 h-4">
