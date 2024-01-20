@@ -42,33 +42,85 @@ public class ProductDao {
 		return products;
 	}
 
-	public List<Cart> getCartProducts(int user_id) {
-		
-		
+	
+
+	public Product getSingleProduct(int id) {
+		Product row = null;
+		try {
+			String selectById = "select * from ecommerce_cart.products where id=? ";
+
+			preparedStatement = connection.prepareStatement(selectById);
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				row = new Product();
+				row.setId(resultSet.getInt("id"));
+				row.setName(resultSet.getString("name"));
+				row.setCategory(resultSet.getString("category"));
+				row.setPrice(resultSet.getDouble("price"));
+				row.setImage(resultSet.getString("image"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+
+		return row;
+	}
+
+	public double getTotalCartPrice(List<Cart> cartList) {
+		double sum = 0;
+
+		try {
+			if (cartList.size() > 0) {
+				for (Cart item : cartList) {
+					String getPrice = "SELECT * FROM ecommerce_cart.products WHERE id = ?";
+					preparedStatement = connection.prepareStatement(getPrice);
+					preparedStatement.setInt(1, item.getId());
+					ResultSet resultSet = preparedStatement.executeQuery();
+
+					while (resultSet.next()) {
+						sum += resultSet.getDouble("price") * item.getQuantity();
+					}
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		return sum;
+	}
+
+	public List<Cart> getCartProducts(List<Cart> cartList) {
+
 		List<Cart> product = new ArrayList<Cart>();
 
 		try {
 
-			
-				
-					
-					String selectAll = "SELECT * FROM ecommerce_cart.place_order WHERE user_id = ?";
-					preparedStatement = connection.prepareStatement(selectAll);
-					preparedStatement.setInt(1, user_id);
-					ResultSet resultSet = preparedStatement.executeQuery();
-				
-				while (resultSet.next()) {
-					Cart row = new Cart();
-					row.setId(resultSet.getInt("id"));
-					row.setName(resultSet.getString("name"));
-					row.setCategory(resultSet.getString("category"));
-					row.setPrice(resultSet.getDouble("price"));
-					row.setImage(resultSet.getString("image"));
-					
+			if (cartList.size() > 0) {
 
-					product.add(row);
+				for (Cart item : cartList) {
+					String selectAll = "SELECT * FROM ecommerce_cart.products WHERE id = ?";
+					preparedStatement = connection.prepareStatement(selectAll);
+					preparedStatement.setInt(1, item.getId());
+					ResultSet resultSet = preparedStatement.executeQuery();
+
+					while (resultSet.next()) {
+						Cart row = new Cart();
+						
+						row.setId(resultSet.getInt("id"));
+						row.setName(resultSet.getString("name"));
+						row.setCategory(resultSet.getString("category"));
+						row.setPrice(resultSet.getDouble("price") * item.getQuantity());
+						row.setQuantity(item.getQuantity());
+						row.setImage(resultSet.getString("image"));
+						
+						product.add(row);
+					}
 				}
-			
+
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -76,54 +128,32 @@ public class ProductDao {
 
 	}
 	
-	
-	 public Product getSingleProduct(int id) {
-		 Product row = null;
-	        try {
-	            String selectById = "select * from ecommerce_cart.products where id=? ";
-	            
+	public List<Cart> getCartProducts(int user_id) {
 
-	            preparedStatement = connection.prepareStatement(selectById);
-	            preparedStatement.setInt(1, id);
-	            ResultSet resultSet = preparedStatement.executeQuery();
+		List<Cart> product = new ArrayList<Cart>();
 
-	            while (resultSet.next()) {
-	            	row = new Product();
-	                row.setId(resultSet.getInt("id"));
-	                row.setName(resultSet.getString("name"));
-	                row.setCategory(resultSet.getString("category"));
-	                row.setPrice(resultSet.getDouble("price"));
-	                row.setImage(resultSet.getString("image"));
-	            }
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            System.out.println(e.getMessage());
-	        }
-
-	        return row;
-	    }
-	
-	
-	public double getTotalCartPrice(List<Cart> cartList) {
-		double sum = 0;
-		
 		try {
-			if(cartList.size() > 0) {
-				for(Cart item:cartList) {
-					String getPrice = "SELECT * FROM ecommerce_cart.products WHERE id = ?";
-					preparedStatement = connection.prepareStatement(getPrice);
-					preparedStatement.setInt(1, item.getId());
-					ResultSet resultSet = preparedStatement.executeQuery();
-					
-					while(resultSet.next()) {
-						sum+=resultSet.getDouble("price")*item.getQuantity();
-					}
-				}
+
+			String selectAll = "SELECT * FROM ecommerce_cart.place_order WHERE user_id = ?";
+			preparedStatement = connection.prepareStatement(selectAll);
+			preparedStatement.setInt(1, user_id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				Cart row = new Cart();
+				row.setId(resultSet.getInt("id"));
+				row.setName(resultSet.getString("name"));
+				row.setCategory(resultSet.getString("category"));
+				row.setPrice(resultSet.getDouble("price"));
+				row.setImage(resultSet.getString("image"));
+				
+				product.add(row);
 			}
+
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
-		
-		return sum;
+		return product;
+
 	}
 }

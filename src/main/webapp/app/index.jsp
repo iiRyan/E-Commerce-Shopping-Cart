@@ -21,7 +21,9 @@
 	<c:if test="${empty products}">There is no proucts </c:if>
 
 
-
+<c:if test="${not empty msg}">
+	<p class="text-center text-danger fs-4">${msg}</p>
+</c:if>
 
 
 	<div class="flex justify-center items-center min-h-screen mt-10">
@@ -61,35 +63,6 @@
 
 
 	</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

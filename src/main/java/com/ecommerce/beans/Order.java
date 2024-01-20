@@ -1,58 +1,68 @@
 package com.ecommerce.beans;
 
-public class Order extends Product{
+import java.util.Date;
 
-	private int orderId;
-	private int uid;
-	private int quantity;
-	private String date;
+public class Order  {
+
+	private int id;
+	private int user_id;
+	private double total_cost;
+	private Date order_date;
+
+	public Order() {
+	}
+
+	public Order(int user_id, double total_cost, Date order_date) {
+
+		this.user_id = user_id;
+		this.total_cost = total_cost;
+		this.order_date = order_date;
+	}
+
 	
-	public Order() {}
 
-	public Order(int orderId, int uid, int quantity, String date) {
-		super();
-		this.orderId = orderId;
-		this.uid = uid;
-		this.quantity = quantity;
-		this.date = date;
+	public Date getOrder_date() {
+		return order_date;
 	}
 
-	public int getOrderId() {
-		return orderId;
+	public void setOrder_date(Date order_date) {
+		this.order_date = order_date;
 	}
 
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
+	public Order(int user_id, double total_cost) {
+		this.user_id = user_id;
+		this.total_cost = total_cost;
 	}
 
-	public void setUid(int uid) {
-		this.uid = uid;
+	public int getid() {
+		return id;
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setid(int id) {
+		this.id = id;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public int getUser_id() {
+		return user_id;
 	}
 
-	public int getUid() {
-		return uid;
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
 	}
 
-	public int getQuantity() {
-		return quantity;
+	public double getTotal_cost() {
+		return total_cost;
 	}
 
-	public String getDate() {
-		return date;
+	public void setTotal_cost(double total_cost) {
+		this.total_cost = total_cost;
 	}
 
+	
 	@Override
 	public String toString() {
-		return "Order [orderId=" + orderId + ", uid=" + uid + ", quantity=" + quantity + ", date=" + date + "]";
+		return "Order [id=" + id + ", user_id=" + user_id + ", total_cost=" + total_cost + ", order_date="
+				+ order_date + "]";
 	}
-	
 	
 }

@@ -1,8 +1,6 @@
 package com.ecommerce.Controller;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.*;
 
 import javax.servlet.RequestDispatcher;
@@ -14,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.ecommerce.beans.Cart;
-import com.ecommerce.beans.User;
 import com.ecommerce.dao.CartDao;
 import com.ecommerce.dao.ProductDao;
 
@@ -27,22 +24,50 @@ public class CartListServlet extends HttpServlet {
 
 		System.out.println("CartListServlet Class Starts...");
 		
+		CartDao cartDao = new CartDao();
 		int user_id = Integer.parseInt(request.getParameter("user_id"));
 		HttpSession session = request.getSession();
+		ProductDao productDao = new ProductDao();
+		double totalCartCost = 0;
 		
-		CartDao cartDao = new CartDao();
-		List<Cart> cartList = cartDao.getUserCartList(user_id);
-		session.setAttribute("myCartList", cartList);
-		System.out.println("From CartServlet ==> "+cartList.toString());
-		System.out.println("mynewCartList Size ==> "+ cartList.size());
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/app/cart.jsp");
-		dispatcher.forward(request, response);
+		try {
+			List<Cart> sessionCartList = (ArrayList<Cart>) session.getAttribute("myCartList");
+			
+			if(sessionCartList != null && !sessionCartList.isEmpty()) {
+				
+				sessionCartList = cartDao.getUserCartList(user_id);
+				totalCartCost = productDao.getTotalCartPrice(sessionCartList);
+				
+				System.out.println("sessionCartList ==><> "+sessionCartList.toString());
+				/*********************************Rayan*************************************
+		         * The "myCartList" session attribute has been retrieved from the Database *
+		         * so when the user checks out it won't be removed. So store it in another *
+		         * session attribute so it won't affect each other.						   *
+		         ***************************************************************************/
+				session.setAttribute("myCartList", sessionCartList); 
+				session.setAttribute("totalCartCost", totalCartCost);
+
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/app/cart.jsp");
+				dispatcher.forward(request, response);
+				
+			}else {
+				request.setAttribute("msg", "Cart List is empty");
+				
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/app/cart.jsp");
+				dispatcher.forward(request, response);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		    request.setAttribute("msg", "An error occurred while retrieving the cart list."); 
+		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		doGet(request, response);
 	}
 

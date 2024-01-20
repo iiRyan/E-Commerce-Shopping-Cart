@@ -13,11 +13,13 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-<c:set var="price" value="${requestScope.listOfPrices}" />
+<c:set var="price" value="${sessionScope.totalCartCost }" />
 <c:if test="${not empty msg}">
 	<p class="text-center text-danger fs-4">${msg}</p>
 </c:if>
 
+<c:set var="status" value="${requestScope['status']}" />
+	<input type="hidden" id="status" value="${status}" />
 
 <div class="min-h-screen">
 	<div class="py-12">
@@ -34,7 +36,9 @@
 
 							<h1 class="text-xl font-medium ">Shopping Cart</h1>
 
+							<c:if test="${not empty myCartList}">
 							<c:forEach var="cart" items="${myCartList}">
+							<c:set var="cart_id" value="${cart.cart_id}" />
 								<div class="flex justify-between items-center mt-6 pt-6">
 									<div class="flex  items-center">
 										<img src="../assets/img/${cart.image}" width="60"
@@ -72,16 +76,6 @@
 
 											<div>
 
-												<button type="submit"
-													class="text-green-600">
-													<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
-														fill="currentColor" class="w-4 h-4">
-  								<path fill-rule="evenodd"
-															d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm.75-10.25v2.5h2.5a.75.75 0 0 1 0 1.5h-2.5v2.5a.75.75 0 0 1-1.5 0v-2.5h-2.5a.75.75 0 0 1 0-1.5h2.5v-2.5a.75.75 0 0 1 1.5 0Z"
-															clip-rule="evenodd" />
-								</svg>
-													</a>
-												</button>
 												<a href="${contextPath}/app/remove-art-item?product_id=${cart.id}"
 													class="text-red-600 hover:bg-red-700"> <svg
 														xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
@@ -91,7 +85,6 @@
 															clip-rule="evenodd" />
 								</svg>
 												</a>
-
 											</div>
 
 										</div>
@@ -99,6 +92,8 @@
 
 								</div>
 							</c:forEach>
+								
+							</c:if>
 
 							<div class="flex justify-between items-center mt-6 pt-6 border-t">
 								<div class="flex items-center">
@@ -121,10 +116,12 @@
 								class="overflow-visible flex justify-between items-center mt-2">
 								<img src="../assets/img/buy-now.svg" width="">
 							</div>
+						<a href="${contextPath}/app/check-out?cart_id=${empty cart_id ? 0 : cart_id}">
+   						 <button class="h-12 w-full bg-indigo-600 rounded focus:outline-none mt-5 text-white hover:bg-indigo-700"> Check Out</button>
+       						</a>				 
+   													 
 
-							<a href="${contextPath}/app/orders-list"><button
-									class="h-12 w-full bg-indigo-600 rounded focus:outline-none mt-5 text-white hover:bg-indigo-700">Check
-									Out</button></a>
+
 						</div>
 
 					</div>
@@ -135,5 +132,22 @@
 </div>
 
 
+	<script src="js/main.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+	<script type="text/javascript">
+		var status = document.getElementById("status").value;
+		if (status == "ListEmpty") {
+
+			Swal.fire({
+				position : "center",
+				icon : "warning",
+				title : "buy something first ^_*.",
+				showConfirmButton : false,
+				timer : 1500
+			});
+		} 
+	</script>
+	<script src="js/main.js"></script>
 
 <%@include file="../includes/footer.jsp"%>

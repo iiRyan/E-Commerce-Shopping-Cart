@@ -20,31 +20,26 @@ import com.ecommerce.dao.ProductDao;
 public class ProductsListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	
 
-	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		   System.out.println("ProductsListServlet Class Starts...");
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
-		System.out.println("ProductsListServlet Class Starts...");
-		
-		ProductDao productDao = new ProductDao();
-		List<Product> products = productDao.getAllProducts();
-		request.setAttribute("products", products);
-		System.out.println("Products Size ==> "+ products.size());
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/app/index.jsp");
-		dispatcher.forward(request, response);
-	}
+		   ProductDao productDao = new ProductDao();
+		   List<Product> products = null;
 
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		   try {
+		       products = productDao.getAllProducts();
+		       
+		   } catch (Exception e) {
+		       e.printStackTrace();
+		       request.setAttribute("msg", "An error occurred while retrieving the products.");
+		       return;
+		   }
 
-	}
+		   request.setAttribute("products", products);		
+		   RequestDispatcher dispatcher = request.getRequestDispatcher("/app/index.jsp");
+		   dispatcher.forward(request, response);
+		}
 
 }
 

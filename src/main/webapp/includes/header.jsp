@@ -47,8 +47,8 @@
  			 <!-- JSTL code -->
 			<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 			<c:set var="userInfo" value="${sessionScope.user}" />
-			<c:set var="cartList" value="${sessionScope.sessionCart-list}" />
-         	<c:set var="cartSize" value="${empty sessionScope['sessionCart-list'] ? '' : fn:length(sessionScope['sessionCart-list'])}" />
+			<c:set var="cartList" value="${sessionScope.myCartList}" />
+         	<c:set var="cartSize" value="${empty sessionScope['myCartList'] ? '' : fn:length(sessionScope['myCartList'])}" />
          
       <!-- navbar -->
    <div id="header">
@@ -102,9 +102,9 @@
                 <li>
                   <a
                     class=" transition hover:text-gray-500/75 :text-white :hover:text-indigo-700"
-                    href="/"
+                    href="${contextPath}/app/orders-list"
                   >
-                    Welcome ${userInfo.name}
+                    Orders
                   </a>
                 </li>
        </c:if>
@@ -112,8 +112,13 @@
               </ul>
             </nav>
                 <c:if test="${ not empty user }">
+                
             <div class="flex items-center gap-4">
               <div class="sm:flex sm:gap-4">
+                <p 
+                  class="block rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700 hover:bg-indigo-700 cursor-pointer">
+                 Welcome ${userInfo.name}
+                </p>
                 <a
                   class="block rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700 hover:bg-indigo-700"
                   href="${contextPath}/logout"
@@ -121,9 +126,9 @@
                   Logout
                 </a>
               </div>
-      
-             
+
             </div>
+            
                </c:if>
             
       

@@ -16,6 +16,7 @@ import com.ecommerce.beans.Cart;
 import com.ecommerce.beans.User;
 import com.ecommerce.dao.CartDao;
 
+
 @WebServlet("/app/add-to-cart")
 public class AddToCartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -23,77 +24,65 @@ public class AddToCartServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
-		
 
 		System.out.println("AddToCartServlet Class Starts...");
-		RequestDispatcher requestDispatcher = null;
-		String contextPath = request.getContextPath();
+
 		CartDao cartDao = new CartDao();
 		HttpSession session = request.getSession();
-		User user = (User) request.getSession().getAttribute("user");
+		User user = (User) session.getAttribute("user");
 		Cart cart = new Cart();
-		
-		
-		
-		
 
 		int user_id = Integer.parseInt(request.getParameter("user_id"));
 		int product_id = Integer.parseInt(request.getParameter("id"));
-		
-		cart.setId(product_id);
-		cart.setUser_id(user_id);
-		cart.setQuantity(1); // By Default Quantity is 1.
-		
-		
-
-		List<Cart> sessionCartList = (ArrayList<Cart>) session.getAttribute("sessionCart-list");
 
 		try {
-			List<Cart> cartList = new ArrayList<Cart>();
+			cart.setId(product_id);
+			cart.setUser_id(user_id);
+			cart.setQuantity(1); // By Default Quantity is 1.
+			
 
-			if (sessionCartList == null || sessionCartList.equals(null) && user != null) {
-				
-				
-				System.out.println(user_id);
-				boolean result = cartDao.insertCartList(cart);
-				
-				
-				cartList.add(cart);
+			List<Cart> sessionCartList = (ArrayList<Cart>) session.getAttribute("myCartList");
 
-				
-				
+			if (sessionCartList == null || sessionCartList.isEmpty()) {
+				if (user != null) {
+					int cartInsertionResult = cartDao.insertCartList(cart);
 
-				session.setAttribute("sessionCart-list", cartList);
-				requestDispatcher = request.getRequestDispatcher("/app/index");
-				requestDispatcher.forward(request, response);
-			} else {
-				cartList = sessionCartList;
-				boolean isExist = false;
+					List<Cart> cartList = new ArrayList<>();
 
-				for (Cart c : sessionCartList) {
-					if (c.getId() == product_id) {
-						isExist = true;
-						request.setAttribute("status", "isExist");
-						requestDispatcher = request.getRequestDispatcher("/app/index");
-						requestDispatcher.forward(request, response);
-					}
-				}
-				if(!isExist) {
-					// Add the new cart to the list
-					boolean result = cartDao.insertCartList(cart);
+					cart.setCart_id(cartInsertionResult);
 					cartList.add(cart);
-					System.out.println("From AddToCartList The CartList Size ==> " + cartList.size());
+					System.out.println("cartList ===> " + cartList.toString());
+
+					session.setAttribute("myCartList", cartList);
 					request.setAttribute("status", "notExist");
-					requestDispatcher = request.getRequestDispatcher("/app/index");
-					requestDispatcher.forward(request, response);
 				}
+			} else {
+				boolean isExist = sessionCartList.stream()
+												  .anyMatch(c -> c.getId() == product_id);
+
+				if (isExist) {
+					request.setAttribute("status", "isExist");
+
+				} else {
+
+					int result = cartDao.insertCartList(cart);
+					cart.setCart_id(result);
+					sessionCartList.add(cart);
+
+					System.out.println("From AddToCartList The CartList Size ==> " + sessionCartList.toString());
+
+					request.setAttribute("status", "notExist");
+				}
+
 			}
-			
-			
-			
-			
+
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/app/index");
+			requestDispatcher.forward(request, response);
 		} catch (Exception e) {
-			System.out.println(e);
+
+			e.printStackTrace();
+			request.setAttribute("msg", "An error occurred while adding the item to the cart.");
+			request.getRequestDispatcher("/app/error").forward(request, response);
 		}
 	}
 }

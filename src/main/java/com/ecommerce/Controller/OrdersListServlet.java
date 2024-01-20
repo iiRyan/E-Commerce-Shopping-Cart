@@ -1,3 +1,4 @@
+
 package com.ecommerce.Controller;
 
 import java.io.IOException;
@@ -16,39 +17,37 @@ import com.ecommerce.beans.Order;
 import com.ecommerce.beans.User;
 import com.ecommerce.dao.OrderDao;
 
-
 @WebServlet("/app/orders-list")
 public class OrdersListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		System.out.println("OrdersListServlet Class Starts...");
-		
+
 		OrderDao orderDao = new OrderDao();
 		HttpSession session = request.getSession(false);
-		DecimalFormat decimaPrice = new DecimalFormat("#.##");
-		
-		User user = (User)session.getAttribute("user");
-		
+
+		User user = (User) session.getAttribute("user");
+
 		try {
-			List<Order> orderList = orderDao.userOrder(user.getId());
+			List<Order> orderList = orderDao.getAllOrders(user.getId());
 			System.out.println(orderList.toString());
 			request.setAttribute("orderList", orderList);
-			System.out.println("OrderList Size ==> "+ orderList.size());
-			
+			System.out.println("OrderList Size ==> " + orderList.size());
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/app/orders.jsp");
 			dispatcher.forward(request, response);
-			
+
 		} catch (Exception e) {
 			System.err.println(e);
 		}
-		
+
 	}
 
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse
+   response) throws ServletException, IOException { // TODO Auto-generated
+   doGet(request, response);
+   }
 
 }
