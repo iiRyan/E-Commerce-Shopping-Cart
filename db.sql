@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `ecommerce_cart`.`users` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -42,16 +42,33 @@ CREATE TABLE IF NOT EXISTS `ecommerce_cart`.`products` (
   `category` VARCHAR(450) NOT NULL,
   `price` DOUBLE NOT NULL,
   `image` VARCHAR(450) NOT NULL,
-  `user_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
-  CONSTRAINT `user_id`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `ecommerce_cart`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 16
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `ecommerce_cart`.`cart_list`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ecommerce_cart`.`cart_list` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `product_id` INT NOT NULL,
+  `quantity` INT NULL DEFAULT NULL,
+  `status` INT NOT NULL COMMENT '0 means the  CartList is not ordered yet\\\\n1 means the cart_list has been ordered',
+  PRIMARY KEY (`id`),
+  INDEX `cart_list_ibfk_1` (`user_id` ASC) VISIBLE,
+  INDEX `cart_list_ibfk_2` (`product_id` ASC) VISIBLE,
+  CONSTRAINT `cart_list_ibfk_1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `ecommerce_cart`.`users` (`id`),
+  CONSTRAINT `cart_list_ibfk_2`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `ecommerce_cart`.`products` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 35
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -60,24 +77,19 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `ecommerce_cart`.`orders`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ecommerce_cart`.`orders` (
-  `o_id` INT NOT NULL AUTO_INCREMENT,
-  `p_id` INT NOT NULL,
-  `u_id` INT NOT NULL,
-  `o_quantity` INT NOT NULL,
-  `o_date` VARCHAR(450) NOT NULL,
-  PRIMARY KEY (`o_id`),
-  INDEX `id_idx` (`p_id` ASC) VISIBLE,
-  INDEX `u_id_idx` (`u_id` ASC) VISIBLE,
-  CONSTRAINT `p_id`
-    FOREIGN KEY (`p_id`)
-    REFERENCES `ecommerce_cart`.`products` (`id`),
-  CONSTRAINT `u_id`
-    FOREIGN KEY (`u_id`)
-    REFERENCES `ecommerce_cart`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NULL DEFAULT NULL,
+  `order_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `total_cost` DECIMAL(10,2) NULL DEFAULT NULL,
+  `quantity` INT NOT NULL DEFAULT '0',
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  INDEX `user_id` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `orders_ibfk_1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `ecommerce_cart`.`users` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 17
+AUTO_INCREMENT = 115
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
