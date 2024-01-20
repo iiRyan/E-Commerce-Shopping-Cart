@@ -62,13 +62,6 @@
 
 <p>This project is a product of continuous learning and implementation of JavaServlet, JSP, and frontend design principles. It represents a small-scale application built to reinforce the understanding of core web development concepts.</p>
 
-<h2>Contributions</h2>
-
-<p>Contributions and feature requests are encouraged! Fork the repository and submit pull requests to enhance the project.</p>
-
-<h2>License</h2>
-
-<p>This project is licensed under the MIT License.</p>
 
 
 JavaSe17 -- Apache Tomcat v9.0
