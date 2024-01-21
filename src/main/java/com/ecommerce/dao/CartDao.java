@@ -143,9 +143,6 @@ public class CartDao {
 
 		return cartList;
 	}
-		
-		
-	
 
 	public boolean updateyStatus(int status, int cart_id) {
 		try {

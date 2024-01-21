@@ -41,9 +41,9 @@ public class CartListServlet extends HttpServlet {
 				
 				System.out.println("sessionCartList ==><> "+sessionCartList.toString());
 				/*********************************Rayan*************************************
-		         * The "myCartList" session attribute has been retrieved from the Database *
-		         * so when the user checks out it won't be removed. So store it in another *
-		         * session attribute so it won't affect each other.						   *
+		         *  																	   *
+		         * 							   No comment								   *
+		         * 					   												       *
 		         ***************************************************************************/
 				session.setAttribute("myCartList", sessionCartList); 
 				session.setAttribute("totalCartCost", totalCartCost);
