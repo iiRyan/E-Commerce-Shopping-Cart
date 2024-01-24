@@ -13,8 +13,8 @@ public class DBConnection {
 
 		try {
 			String dbURL = "jdbc:mysql://localhost:3306/ecommerce_cart";
-			String userName = "root";
-			String password = "password1";
+			String userName = "YOUR USERNAME";
+			String password = "YOUR PASSWORD";
 
 			// Load JDBC Driver
 			Class.forName("com.mysql.jdbc.Driver"); // MySql Driver Class Name.
